@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/eef519840c.js" crossorigin="anonymous"></script>
+    <title>Stop Watch</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 100%;
+            height: 100vh;
+            background-color: rgb(34, 109, 248);
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+        .stopwatch{
+            position: absolute;
+            top: 25%;
+            left: 35%;
+            background: #fff;
+            color: #000;
+            width: 30%;
+            height: 30%;
+            text-align: center;
+            padding: 50px 0px 0px 0px;
+            justify-content: center;
+            align-items: center;
+        }
+        #displaystopwatch{
+            margin: 10px;
+        }
+        i{
+            margin: 0px 10px;
+            font-size: 1.4rem;
+        }
+        i:nth-child(3){
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="stopwatch">
+            <h1 id="displaystopwatch">00:00:00</h1>
+            <i class="fa-solid fa-circle-stop" onclick="stop()"></i>
+            <i class="fa-solid fa-play" onclick="start()"></i>
+            <i class="fa-solid fa-arrow-rotate-right" onclick="reset()"></i>
+        </div>
+    </div>
+    
+    <script>
+        let [seconds,hours,minutes] = [0,0,0];
+        let displaystopwatch = document.getElementById("displaystopwatch");
+        let timer = null;
+
+        function stopwatch(){
+            seconds++;
+            if(seconds == 60){
+                seconds = 0;
+                minutes++;
+                if(minutes ==60){
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            let h = hours <10 ? "0" + hours : hours;
+            let m = minutes <10 ? "0" + minutes : minutes;
+            let s = seconds <10 ? "0" + seconds : seconds;
+
+            displaystopwatch.innerHTML = h + ":" + m + ":" + s;
+        }
+
+        function start(){
+            if(timer!== null){
+                clearInterval(timer);
+            }
+            timer = setInterval(stopwatch,1000);
+        }
+        
+        function stop(){
+            clearInterval(timer);
+        }
+
+        function reset(){
+            clearInterval(timer);
+            [seconds,hours,minutes] = [0,0,0];
+            displaystopwatch.innerHTML = "00:00:00";
+        }
+
+    </script>
+
+</body>
+</html>                      
